@@ -7,7 +7,7 @@ Movie::Movie() {
 
 Movie::Movie(string a, double b) {
     n = a;
-    rt = b;
+    rt =b;
 }
 
 string Movie::name() const {

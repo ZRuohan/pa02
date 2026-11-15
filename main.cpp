@@ -39,7 +39,7 @@ int main(int argc, char** argv){
 
     set<Movie> ms;
     string line, movieName;
-    double movieRating;
+    double movieRating ;
 
     // Read each file and store the name and rating
     while (getline (movieFile, line) && parseLine(line, movieName, movieRating)){
@@ -47,7 +47,7 @@ int main(int argc, char** argv){
             // to construct your Movie objects
             // cout << movieName << " has rating " << movieRating << endl;
             // insert elements into your data structure
-            Movie m(movieName, movieRating);
+            Movie m(movieName,movieRating);
             ms.insert(m);
     }
 
@@ -73,7 +73,9 @@ int main(int argc, char** argv){
         if (!line.empty()) {
             pfx.push_back(line);
         }
-    }
+
+        //;
+      }
 
     //  For each prefix,
     //  Find all movies that have that prefix and store them in an appropriate data structure
@@ -81,17 +83,18 @@ int main(int argc, char** argv){
     vector<string> bp;
     vector<Movie> bm;
 
-    for (int i = 0; i < pfx.size(); i++) {
-    string pre = pfx[i];
+    for (int i = 0; i<pfx.size(); i++) {
+
+    string pre =pfx[i];
     vector<Movie> eq;
 
     Movie j(pre, 0.0);
 
 
-        auto it = ms.lower_bound(j);//
+        auto it= ms.lower_bound(j);//
 
     //  for (auto it=ms.begin(); it !=ms.end(); it++) {
-    while(it !=ms.end() && it->getstart(pre)){
+    while(it!=ms.end()&&it->getstart(pre)){
         eq.push_back(*it);
         it++;
     }
@@ -128,19 +131,36 @@ int main(int argc, char** argv){
 /* Add your run time analysis for part 3 of the assignment here as commented block*/
 
 //Analysis, proof:
-  //Time
-    //Analysis: For Worst Patr2,we:
-      //1.check each, and do cmp, Oln.
-      //2.Sort for match, so in max k elements, and do this is Okllogk(Since we need assume all same rating to cmp the name, thus l multiplied)
-      //3.iterate m
-      //Concl: So it should be O(m(n+kl*logk))
-  //Space
-      //1. need O(kl) for eq to store names
-      //2. we got bp,bm sowe have O(2ml) since we assumed that each p is as long as m here, so 2ml, and constant non-reserve, so
-      //Concl: O(ml+kl), or((m+k)l)
+  //1.Time
+    //Analysis: For WorstCase2:
+      //1.we first use a lower_bound func to do O(logn) cmp, each time worst case is l chars, thus T-comp is O(l logn) for 1.1.
+      //2. For each prefix we have k movies, thus l chars for each, time is O(kl).
+      //3. Sorting, we do sort on k movies, which is O(k logk),
+        //and suppose all with same rating, we need name cmp, do l char cmps for worst case, thus O(lk logk)
+      //Conclu. thus for all m prefixes, we need
+      // O(m(llogn + kl + lklogk))
 
-  //Tradeoff
-    // I think f
+      //Citation:To use this format I looked up cppref and blogs,and the data of lb is from there.
+
+  //2.Test on CSIL
+    //20: 0.01s
+    //100: 0.01s
+    //1000: 0.01s
+    //76920: 0.15s
+
+  //3.Space
+    //Space used = eq + bp+bm
+    //= Ok + Om +Om
+    //S = O(2(k+m))
+    //ignoring C, result is O(k+m)
+
+  //4.Tradeoff
+  //I think I got a good running time...though I am not sure if its because there are something magical in lower_bound, I did find some blogs said it is a recommended way...
+  //For space, the space in just linear with mk, since we only created 3 vecs for use.
+  //However,the time is still in iteration resp to m,n.,just reduced to logn by lower_b
+  //Therefore I think I might used time to exchange for space simplicity.
+
+
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
     int commaIndex = line.find_last_of(",");
