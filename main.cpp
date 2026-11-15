@@ -56,7 +56,7 @@ int main(int argc, char** argv){
     if (argc == 2){
             //print all the movies in ascending alphabetical order of movie names
             for (auto it=ms.begin(); it!=ms.end(); it++) {
-              cout << it->name() << " "<< it->rating() << endl;
+              cout << it->name() << ","<< it->rating() << endl;
             }
             return 0;
     }
@@ -110,7 +110,7 @@ int main(int argc, char** argv){
         sort(eq.begin(), eq.end(), cmsort);
 
         for (int j= 0; j < eq.size(); j++) {
-            cout << eq[j].name() << " " << eq[j].rating() << endl;
+            cout << eq[j].name() << "," << eq[j].rating() << endl;
 
         }
           bp.push_back(pre);
