@@ -163,6 +163,7 @@ int main(int argc, char** argv){
 
 
 bool parseLine(string &line, string &movieName, double &movieRating) {
+    
     int commaIndex = line.find_last_of(",");
     movieName = line.substr(0, commaIndex);
     movieRating = stod(line.substr(commaIndex+1));
