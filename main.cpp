@@ -113,6 +113,7 @@ int main(int argc, char** argv){
             cout << eq[j].name() << ", " << eq[j].rating() << endl;
 
         }
+        cout << endl;
           bp.push_back(pre);
           bm.push_back(eq[0]);
       }
